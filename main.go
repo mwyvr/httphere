@@ -11,6 +11,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"net/http"
 	"os"
@@ -20,32 +21,40 @@ import (
 	"github.com/go-chi/chi/middleware"
 )
 
+const nPorts int = 100
+
 var (
-	version string
+	version     string = "development" // set via go build --ldflags, see Makefile
+	httpAddress string = "0.0.0.0"
+	httpPort    int    = 8080
 )
+
+func init() {
+	flag.StringVar(&httpAddress, "address", httpAddress, "Address server should listen on")
+	flag.IntVar(&httpPort, "port", httpPort, "Port server should bind to")
+}
 
 func main() {
 	var addr string
-
-	fmt.Println(version)
+	flag.Parse()
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	workdir, _ := os.Getwd()
 	FileServer(r, "/", http.Dir(workdir))
 
-	for i := 8080; i <= 8099; i++ {
+	for i := httpPort; i <= httpPort+nPorts; i++ {
 		var err error
-		addr = fmt.Sprintf("0.0.0.0:%d", i)
-		fmt.Printf("Listening on: %s\n", addr)
+		addr = fmt.Sprintf("%s:%d", httpAddress, i)
+		fmt.Printf("httphere (%s) listening on: %s, serving files from: %s\n", version, addr, workdir)
 		err = http.ListenAndServe(addr, r)
 		if err != nil {
-			fmt.Printf("Error, %s in use. Trying next.\n", addr) // most likely err
+			fmt.Printf("Error: %s - trying next.\n", err)t
 			continue
 		}
 		break
 	}
-	fmt.Println("No available ports between 8080 and 8099, quitting.")
+	fmt.Printf("No available ports between %d and %d.", httpPort, httpPort+nPorts)
 }
 
 // FileServer sets up a http.FileServer handler for an http.FileSystem.
