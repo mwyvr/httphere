@@ -20,8 +20,14 @@ import (
 	"github.com/go-chi/chi/middleware"
 )
 
+var (
+	version string
+)
+
 func main() {
 	var addr string
+
+	fmt.Println(version)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
@@ -39,15 +45,13 @@ func main() {
 		}
 		break
 	}
-	fmt.Print("No available ports between 8080 and 8099, quitting.\n")
+	fmt.Println("No available ports between 8080 and 8099, quitting.")
 }
 
-// from the Chi examples:
-//	https://github.com/go-chi/chi/blob/master/_examples/fileserver/main.go
-
-// FileServer sets up a http.FileServer handler
-// static files from a http.FileSystem.
+// FileServer sets up a http.FileServer handler for an http.FileSystem.
 func FileServer(r chi.Router, path string, root http.FileSystem) {
+	// from the Chi examples:
+	//	https://github.com/go-chi/chi/blob/master/_examples/fileserver/main.go
 	if strings.ContainsAny(path, "{}*") {
 		panic("FileServer does not permit any URL parameters.")
 	}
