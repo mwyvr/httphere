@@ -40,16 +40,18 @@ func main() {
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
-	workdir, _ := os.Getwd()
+	workdir, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
 	FileServer(r, "/", http.Dir(workdir))
 
 	for i := httpPort; i <= httpPort+nPorts; i++ {
-		var err error
 		addr = fmt.Sprintf("%s:%d", httpAddress, i)
-		fmt.Printf("httphere (%s) listening on: %s, serving files from: %s\n", version, addr, workdir)
+		fmt.Printf("httphere (%s) listening at: %s, serving files from: %s\n", version, addr, workdir)
 		err = http.ListenAndServe(addr, r)
 		if err != nil {
-			fmt.Printf("Error: %s - trying next.\n", err)t
+			fmt.Printf("Error: %s - trying next.\n", err)
 			continue
 		}
 		break
@@ -66,7 +68,7 @@ func FileServer(r chi.Router, path string, root http.FileSystem) {
 	}
 
 	if path != "/" && path[len(path)-1] != '/' {
-		r.Get(path, http.RedirectHandler(path+"/", 301).ServeHTTP)
+		r.Get(path, http.RedirectHandler(path+"/", http.StatusMovedPermanently).ServeHTTP)
 		path += "/"
 	}
 	path += "*"
