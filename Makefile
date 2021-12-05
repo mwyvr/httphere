@@ -16,6 +16,10 @@ clean:  ## clean go environment for this package
 build:  ## build this package
 	go build -ldflags="-X 'main.version=$(VERSION)'"
 
+install: 
+	go clean
+	go install -ldflags="-X 'main.version=$(VERSION)'"
+
 all:  ## clean and build this package (default)
 	$(info Building $(VERSION))
 	make clean
