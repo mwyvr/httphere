@@ -1,4 +1,4 @@
-VERSION	:= $(shell git describe  --always --long)
+VERSION	:= $(shell git describe  --always)
 
 .PHONY: clean build all
 
