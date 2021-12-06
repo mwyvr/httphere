@@ -10,9 +10,9 @@ working directory (hence http**here**) and below.
 
 ## Usage
 
-`httphere` with no flags will attempt to start a webserver in the current working
-directory, binding to the default or specified port at all available IPv4 addresses
-on the machine including `localhost` via the special address `0.0.0.0`.  
+`httphere` with no flags starts a webserver in the current working directory.
+By default, via the special address `0.0.0.0`, the server binds to all available
+IPv4 addresses on the machine.
 
 Available flags:
 
@@ -21,5 +21,5 @@ Available flags:
     -port int
             Port server should bind to (default 8080)
 
-            If the port can't be bound to (e.g. if already a bound to a server), 
-            ports n+100 will be tried.
+            If the port can't be bound to, a range of 100 incremental
+            ports will be tried.
