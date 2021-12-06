@@ -1,17 +1,17 @@
 # httphere
 
-`httphere` is a simple Go/Chi powered http server for ad hoc use such as
+`httphere` is a simple Go/Chi powered http file server for ad hoc use such as
 testing HTML or temporarily exposing a local file system at the current
 working directory (hence http**here**) and below.
 
 ## Installation
 
-    go get -u https://github.com/solutionroute/httphere
+    go install github.com/solutionroute/httphere@latest
 
 ## Usage
 
-`httphere` with no flags will attempt to start a webserver in the current working 
-directory, binding to the default or specified port at all available IPv4 addresses 
+`httphere` with no flags will attempt to start a webserver in the current working
+directory, binding to the default or specified port at all available IPv4 addresses
 on the machine including `localhost` via the special address `0.0.0.0`.  
 
 Available flags:
