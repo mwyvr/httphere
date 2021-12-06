@@ -39,6 +39,7 @@ func main() {
 	flag.Parse()
 
 	r := chi.NewRouter()
+	r.Use(middleware.NoCache)
 	r.Use(middleware.Logger)
 	workdir, err := os.Getwd()
 	if err != nil {
