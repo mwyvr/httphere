@@ -1,10 +1,10 @@
 # httphere
 
-`httphere` is a simple Go/Chi powered http file server for ad hoc use such as
-testing HTML or temporarily exposing a local file system at the current
+`httphere` is a simple Go/Chi powered http file server intended for ad hoc use
+such as testing HTML or temporarily exposing a local file system at the current
 working directory (hence http**here**) and below.
 
-Given the intended use, cache-control headers are disabled by default.
+Given the expected use, cache-control headers are disabled by default.
 
 ## Installation
 
