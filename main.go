@@ -1,11 +1,13 @@
-// httphere provides a simple http file server for ad-hoc use, testing HTML, etc.
-// Given the intended use, cache-control headers are disabled by middleware by default.
-//
-// usage:
-//   httphere -h
-//
-// httphere attempts to bind to the specified/default port; if the port can't be bound to,
-// it will attempt to bind to another by iterating through up to 100 ports.
+/* httphere is a simple http file server for ad-hoc use such as testing HTML.
+
+Given the intended use, cache-control headers are disabled by middleware by
+default.
+
+usage: httphere -h
+
+httphere attempts to bind to the specified/default port; if the port can't be
+bound to, it will attempt to bind to one of the next n ports.
+*/
 
 package main
 
@@ -21,18 +23,18 @@ import (
 	"github.com/go-chi/chi/middleware"
 )
 
-const tryPorts int = 100
-
 var (
-	version     string = "1.0.1"
+	version     string = "1.0.2"
 	httpAddress string = "0.0.0.0"
 	httpPort    int    = 8080
+	tryPorts    int    = 100
 	noCache     bool   = true
 )
 
 func init() {
 	flag.StringVar(&httpAddress, "address", httpAddress, "Address server should listen on")
 	flag.IntVar(&httpPort, "port", httpPort, "Port server should bind to")
+	flag.IntVar(&tryPorts, "tryPorts", tryPorts, "Attempt next n ports if specified can't be bound")
 	flag.BoolVar(&noCache, "nocache", noCache, "Sets no-cache and other headers.\n-nocache=false to disable")
 }
 
