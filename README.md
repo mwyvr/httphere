@@ -8,7 +8,7 @@ Given the expected use, cache-control headers are disabled by default.
 
 ## Installation
 
-    go install github.com/solutionroute/httphere@latest
+    go install github.com/mwyvr/httphere@latest
 
 ## Usage
 
