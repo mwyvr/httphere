@@ -19,12 +19,12 @@ import (
 	"os"
 	"strings"
 
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 )
 
 var (
-	version     string = "1.0.2"
+	version     string = "1.1.0"
 	httpAddress string = "0.0.0.0"
 	httpPort    int    = 8080
 	tryPorts    int    = 100
